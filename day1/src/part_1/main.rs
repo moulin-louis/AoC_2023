@@ -13,7 +13,7 @@ fn read_file(path: &str) -> Option<String> {
 }
 
 fn calculate_result(input: String) -> u32 {
-    let mut cal_vale: Vec<u32> = Vec::new();
+    let mut result: u32 = 0;
     for line in input.lines() {
         let first_nbr = match line.find(|x: char| x.is_numeric()) {
             Some(x) => x,
@@ -25,9 +25,9 @@ fn calculate_result(input: String) -> u32 {
         };
         let val1 = line.as_bytes()[first_nbr];
         let val2 = line.as_bytes()[last_nrb];
-        cal_vale.push(((val1 - b'0') * 10 + val2 - b'0').into());
+        result += (((val1 - b'0') * 10 + val2 - b'0')) as u32;
     }
-    cal_vale.iter().sum()
+    result
 }
 
 fn main() {
