@@ -17,27 +17,16 @@ fn create_races(input: &str) -> Vec<Race> {
 
 fn check_every_posibility_race(race: &Race) -> u64 {
     let mut result = 0;
-    for time in 0..race.time {
-        let time_left = race.time - time;
-        let distance_travel = time * time_left;
-        if distance_travel > race.distance {
-            result += 1;
-        }
+    for x in 1..race.time {
+        result += if x * (race.time - x) > race.distance { 1 } else { 0 };
     }
     result
 }
 
 fn part1(input: &str) -> u64 {
     let races = create_races(input);
-    let mut result = 0;
-    for race in races {
-        let posibility = check_every_posibility_race(&race);
-        if result == 0 {
-            result = posibility;
-        } else {
-            result *= posibility;
-        }
-    }
+    let mut result = check_every_posibility_race(&races[0]);
+    let _ = races.iter().skip(1).map(|x| result *= check_every_posibility_race(x)).collect::<Vec<_>>();
     result
 }
 
